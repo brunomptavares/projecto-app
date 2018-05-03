@@ -3,14 +3,16 @@
     <p class="menu-label">Área Pessoal</p>
     <ul class="menu-list">
         <li><router-link to="/pessoal/agenda" exact tag="a">Agenda</router-link></li>
+        <li><router-link to="/pessoal/quadro" exact tag="a">Quadro</router-link></li>
         <li><router-link to="/pessoal/horario" exact tag="a">Horário</router-link></li>
+        <li><router-link to="/pessoal/notificacoes" exact tag="a">Notificações</router-link></li>
         <li><router-link to="/pessoal/perfil" exact tag="a">Perfil</router-link></li>
     </ul>
-    <p class="menu-label">Área pessoal</p>
+    <p class="menu-label">Área Comum</p>
     <ul class="menu-list">
-        <li><a>Invitations</a></li>
-        <li><a>Cloud Storage Environment Settings</a></li>
-        <li><a>Authentication</a></li>
+        <li><router-link to="/procurar" exact tag="a">Procurar</router-link></li>
+        <li><router-link to="/login" exact tag="a">Log-in / Log-out</router-link></li>
+        <li><router-link to="/problemas" exact tag="a">Reportar problemas</router-link></li>
     </ul>
     <p class="menu-label">Transactions</p>
     <ul class="menu-list">
