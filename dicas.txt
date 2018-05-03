@@ -1,0 +1,110 @@
+//Front end
+
+//Modulos gerais
+vue init webpack
+npm i mongojs mongoose
+npm i axios (modulo para pedidos HTTP)
+npm i vuex - state management flow
+
+//Sass helpers and framework
+npm i node-sass sass-loader
+npm i bulma - html e css framework para interface web
+npm i compass-mixins - css helpers
+
+Edit build/util.js to add includePaths to node_modules/compass-mixins/lib for sass and scss.
+exports.cssLoaders = function (options) {
+  ...
+  return {
+    ...
+    sass: generateLoaders('sass', { indentedSyntax: true, includePaths: [path.resolve(__dirname, '../node_modules/compass-mixins/lib')] }),
+    scss: generateLoaders('sass', { includePaths: [path.resolve(__dirname, '../node_modules/compass-mixins/lib')] }),
+    ...
+  }
+}
+
+//Extra components
+npm i bulma-steps - forms step-by-step
+npm i sweet-modal-vue - caixas de confirmação etc
+npm i slideout
+
+//Program logic
+npm install schema-object 
+
+//Back end
+npm init - inicializar o projecto na pasta
+npm i express - instalar express.js torna o código do servidor mais organizado
+npm i mongojs - integração com a base de dados MongoDB
+npm i formidable - manipulação de pedidos de formulario
+npm i ejs - render HTML no browser (para teste)
+npm i cors -
+npm i nodemon -D - reenicia o servidor sempre que há alterações para não ter de o fazer manualmente
+npm install --save bcrypt-nodejs jsonwebtoken morgan passport passport-jwt (auth)
+
+//MongoDB
+
+-Extrair e adicionar a pasta à variável de ambiente PATH
+-Criar pasta para armazenar a base de dados
+
+mongod --dbpath D:\2017-2018\PROJECTO\projecto-app\server\data
+
+//listar db
+show dbs
+//selecionar db
+use test-db
+//Para criar a base de dados é necessário adicionar um registo
+db.tests.insert({"name":"Test1"})
+//Mostrar
+db.tests.find()
+
+https://www.tutorialspoint.com/mongodb/mongodb_data_modeling.htm
+
+
+Titulo, autores, coordenadores, unidade curricular
+Sintese, objectivos, clientes
+
+-MongoDB
+
+mongod --dbpath "D:\2017-2018\PROJECTO\app\data (lançar o serviço de base de dados)
+mongo (aceder ao servidor de base de dados modo consola)
+
+db-name:test-db
+collection:uploads
+formato:
+
+{ 
+    "doc-tag": "teste", 
+    "modifications": [
+        { "userId" : "console", "dateTime" : ISODate("2018-03-17T00:32:05.154Z") },
+        { "userId" : "console", "dateTime" : ISODate("2018-03-17T00:32:05.154Z") }
+    ],
+    "subscricoes": []
+}
+
+https://github.com/felixge/node-formidable
+
+npm view node version
+
+
+GIT HUB
+
+//configurar
+user.name=brunomptavares
+user.email=brunomptavares@hotmail.com
+//inicializar projecto
+git init
+//adicionar pasta
+git add nome-da-pasta (client, server e dicas.txt)
+//git por defeito força EOL do tipo CRLF
+git config --global core.autocrlf false
+//.gitignore (ignorar pastas)
+
+//adicionar repositorio
+git remote add origin git@github.com:brunomptavares/projecto-app
+git remote -v
+
+//obter o que lá esta
+git pull origin master
+
+git commit -m "First commit of projecto-app to push project files to repository"
+git push origin master
+git status
