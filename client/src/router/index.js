@@ -11,16 +11,35 @@ import PerfilArea from '../components/PerfilArea.vue'
 
 Vue.use(Router)
 
+import AuthService from '@/services/AuthService'
+
 const routes = [
-  { path: '/', name: 'MainPage', component: MainPage },
-  { path: '/viewExamples', name: 'ViewExamples', component: ViewExamples },
-  { path: '/addExample', name: 'AddExample', component: AddExample },
-  { path: '/login', name: 'LoginArea', component: LoginArea },
+  { path: '/', 
+    name: 'MainPage', 
+    component: MainPage,
+    beforeEnter: function (to, from, next) {
+      if(AuthService.loggedIn()) next()
+      else next('/login')
+    }
+  },
+  { path: '/viewExamples',
+    name: 'ViewExamples',
+    component: ViewExamples },
+  { path: '/addExample',
+    name: 'AddExample',
+    component: AddExample },
+  { path: '/login', 
+    name: 'LoginArea', 
+    component: LoginArea },
   //Área pessoal
   //{ path: '/pessoal/agenda', name: 'AgendaArea', component: AgendaArea }
   //{ path: '/pessoal/horario', name: 'HorarioArea', component: HorarioArea },
-  { path: '/pessoal/perfil', name: 'PerfilArea', component: PerfilArea },
-  { path: '/registo', name: 'RegisterArea', component: RegisterArea }
+  { path: '/pessoal/perfil', 
+    name: 'PerfilArea', 
+    component: PerfilArea },
+  { path: '/registo', 
+    name: 'RegisterArea', 
+    component: RegisterArea }
 ]
 
 export default new Router({

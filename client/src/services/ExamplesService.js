@@ -1,12 +1,19 @@
 import axios from 'axios'
+import passport from 'passport'
 
-const connection = axios.create({baseURL: `http://localhost:3000`})
+import StorageService from './StorageService'
+import HTTPService from './HTTPService'
 
 export default {
-  fetchExamples () {
-    return connection.get('/api/examples');
+  async fetchExamples () {
+    try { 
+      let res = await HTTPService.getConnection().get('/api/examples') 
+      return res;
+    } catch (err) { 
+      return err.response
+    }
   },
   addExample(formData) {
-    return connection.post('/api/examples', formData);
+    return HTTPService.getConnection().post('/api/examples');
   }
 }

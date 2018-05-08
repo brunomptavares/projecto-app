@@ -4,32 +4,39 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 
-//import BootstrapVue from 'bootstrap-vue'
-//import 'bootstrap/dist/css/bootstrap.css'
-//import 'bootstrap-vue/dist/bootstrap-vue.css'
-//Vue.use(BootstrapVue);
+// import Toastr
+import Toastr from 'vue-toastr';
+// import toastr scss file: need webpack sass-loader
+require('vue-toastr/src/vue-toastr.scss');
+// register plugin
+Vue.use(Toastr)
 
 // Require the main Sass manifest file importing bluma
 require('./assets/sass/main.scss');
 
+
+
 Vue.config.productionTip = false
 
 Vue.prototype.$appName = 'ACS';
-//Vue.prototype.$eventBus = new Vue(); // Global event bus
 
-Object.defineProperties(Vue.prototype, {
-  $eventBus: {
+
+
+/*Object.defineProperties(Vue.prototype, {
+  $toastr: {
     get: function () {
-      return new Vue();
+      return Toastr;
     }
   }
-})
+})*/
+//Vue.prototype.$eventBus = new Vue(); // Global event bus
+
 
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
   router,
   components: { App },
-  template: '<app/>'
+  template: '<app/>',
 })
 

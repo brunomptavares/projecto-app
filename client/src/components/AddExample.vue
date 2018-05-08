@@ -13,13 +13,14 @@
 
 <script>
 import ExamplesService from '@/services/ExamplesService'
+import HTTPService from '@/services/HTTPService'
 import EventBus from "@/services/EventBus.js";
 export default {
   name: 'AddExample',
   methods: {
    async addExample() {
       let formData = new FormData(this.$refs.form);
-      let req = await ExamplesService.addExample(formData);
+      let req = await HTTPService.addExample(formData);
       EventBus.$emit('exampleAdded', formData);
     }
   }

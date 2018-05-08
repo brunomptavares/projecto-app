@@ -9,7 +9,7 @@
 
     <div class="search">
       <div class="control is-expanded">
-        <input class="input" type="text" placeholder="Find a repository">
+        <input class="input" type="text" placeholder="Procurar">
       </div>
       <div class="control">
         <a class="button is-info">
@@ -100,7 +100,7 @@ export default {
   components: {FontAwesomeIcon},
   methods: {
     toggleMainNav: () => {
-      VuexService.dispatch("TOGGLE_MAINNAV");
+      VuexService.dispatch("toggleMainNav");
     }
   }
 };

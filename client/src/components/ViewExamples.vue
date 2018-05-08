@@ -10,12 +10,14 @@
         <th scope="col">file</th>
       </tr>
       <tbody>
-        <tr v-for="example in examples">
-          <td>{{ example.docTag }}</td>
-          <td>{{ example.uploadInfo.userId }}</td>
-          <td>{{ example.uploadInfo.dateTime }}</td>
-          <td><a target="blank" v-bind:href="'http://localhost:3000/api/examplesFile/'+ example._id">View file</a></td>
-        </tr>
+        <template v-if="examples && examples.length > 0">
+          <tr v-for="example in examples">
+            <td>{{ example.docTag }}</td>
+            <td>{{ example.uploadInfo.userId }}</td>
+            <td>{{ example.uploadInfo.dateTime }}</td>
+            <td><a target="blank" v-bind:href="'http://localhost:3000/api/examplesFile/'+ example._id">View file</a></td>
+          </tr>
+        </template>
       </tbody>
     </table>
   </div>
@@ -27,7 +29,9 @@
 
 <script>
 import ExamplesService from "@/services/ExamplesService";
+import ToastService from "@/services/ToastService"
 import EventBus from "@/services/EventBus.js";
+
 export default {
   name: "ViewExamples",
   data() {
@@ -44,16 +48,21 @@ export default {
     EventBus.$off('testEvent');
   },
   mounted() {
-    this.getPosts();
+    this.getExamples();
   },
   methods: {
-    async getPosts() {
-      const response = await ExamplesService.fetchExamples();
-      this.examples = response.data;
+    async getExamples() {
+      let res = await ExamplesService.fetchExamples();
+      console.log(res)
+      if(res.data.success) this.examples = res.data.examples;
+      /*else {
+        ToastService.toastFromResponse(this.$toastr, res)
+        this.$router.push({name: 'LoginArea'})
+      }*/
     },
     exampleAdded($event) {
       console.log($event)
-      this.getPosts();
+      this.getExamples();
     },
     testEvent($event) {
       alert("testEvent, value="+$event)

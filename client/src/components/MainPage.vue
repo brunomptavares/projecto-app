@@ -22,6 +22,7 @@
 <script>
 import AddExample from "./AddExample.vue";
 import ViewExamples from "./ViewExamples.vue";
+
 export default {
   name: "MainPage",
   components: { "examples": ViewExamples, "add-example": AddExample}

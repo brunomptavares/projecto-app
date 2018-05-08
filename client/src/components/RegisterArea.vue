@@ -11,9 +11,16 @@
       </div>
 
       <div class="field">
-        <label class="label">Número de aluno*</label>
+        <label class="label">Password</label>
         <div class="control">
           <input class="input" type="text" name="password">
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="label">Número de aluno*</label>
+        <div class="control">
+          <input class="input" type="text" name="text">
         </div>
       </div>
 

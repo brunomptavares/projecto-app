@@ -28,6 +28,7 @@
   import { TweenMax } from 'gsap';
   import VuexService from "./services/VuexService.js"
 
+
   export default {
     name: 'App',
     components: { "top-nav" : TopNav, "event-button" : EventButton, "main-nav": MainNav },
@@ -38,13 +39,21 @@
         slideAnimation: null
       }
     },
+    created() {
+
+    },
+    methods: {
+      test() {
+
+      }
+    },
     computed: {
       //Menu button click changes mainNavOpen state in Vuex
       //This property reacts to that change
       //Property must be displayed in order to react wtf? <p class="trick">
       //Animation breaks computed properties so we need to use a watcher
       mainNavToggle : function () {
-        return VuexService.state.mainNavOpen
+        return VuexService.getters.mainNavOpen
       }
     },
     watch: {
@@ -72,7 +81,6 @@
         { ease: Power1.easeIn, 
           marginLeft: 0, opacity:"1", paused:true })
       //Hide mainNav if is closed
-      console.log(this.mainNavToggle)
       if(this.mainNav && this.mainNavToggle) this.slideAnimation.play().timeScale(1)
       //Get routerView reference
       this.routerView = this.$refs.routerView.$el
@@ -102,5 +110,11 @@
   .trick {
     display: none;
   }
+
+  /*toast-container {
+    top:auto;
+    right: 12px;
+    bottom: 12px;
+  }*/
 
 </style>

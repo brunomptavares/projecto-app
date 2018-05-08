@@ -1,25 +1,27 @@
 <template>
   <aside id="main-nav">
-    <p class="menu-label">Área Pessoal</p>
-    <ul class="menu-list">
+    <div class="area-pessoal">
+      <p class="menu-label">Área Pessoal</p>
+      <ul v-if="loggedIn" class="menu-list">
         <li><router-link to="/pessoal/agenda" exact tag="a">Agenda</router-link></li>
         <li><router-link to="/pessoal/quadro" exact tag="a">Quadro</router-link></li>
         <li><router-link to="/pessoal/horario" exact tag="a">Horário</router-link></li>
         <li><router-link to="/pessoal/notificacoes" exact tag="a">Notificações</router-link></li>
         <li><router-link to="/pessoal/perfil" exact tag="a">Perfil</router-link></li>
-    </ul>
-    <p class="menu-label">Área Comum</p>
-    <ul class="menu-list">
+        <li><a v-on:click="logOut()">Terminar sessão</a></li>
+      </ul>
+      <ul v-else class="menu-list">
+        <li><router-link to="/login" exact tag="a">Iniciar sessão</router-link></li>
+      </ul>
+    </div>
+    <div class="area-comum">
+      <p class="menu-label">Área Comum</p>
+      <ul class="menu-list">
+        <li><router-link to="/" exact tag="a">Examples</router-link></li>
         <li><router-link to="/procurar" exact tag="a">Procurar</router-link></li>
-        <li><router-link to="/login" exact tag="a">Log-in / Log-out</router-link></li>
         <li><router-link to="/problemas" exact tag="a">Reportar problemas</router-link></li>
-    </ul>
-    <p class="menu-label">Transactions</p>
-    <ul class="menu-list">
-        <li><a>Payments</a></li>
-        <li><a>Transfers</a></li>
-        <li><a>Balance</a></li>
-    </ul>
+      </ul>
+    </div>
   </aside>
 </template>
 
@@ -49,14 +51,32 @@
         //background-color:#feafea;
         z-index:5;
       }
+      
+      .menu-list {
+        margin-bottom: 1em;
+      }
+
     }
 </style>
 
 <script>
 
-  import VuexService from "../services/VuexService.js"
-  
+  import AuthService from "../services/AuthService.js"
+  import ToastService from "@/services/ToastService"
+
   export default {
     name: "main-nav",
+    computed: {
+      loggedIn : function () {
+        return AuthService.loggedIn()
+      }
+    }, 
+    methods: {
+      logOut() {
+        let res = AuthService.logOut()
+        ToastService.toast(this.$toastr, "Success", "User successfully logged out.", "success")
+        this.$router.push({name:'LoginArea'})
+      }
+    }
   };
 </script>

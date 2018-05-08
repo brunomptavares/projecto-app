@@ -7,23 +7,46 @@ const db = require("../db");
 const uploadsCol = db.collection("test-db");
 const mongojs = require("mongojs");
 
+var passport = require('passport');
+
 //Get all the uploaded docs
-router.get('/examples', (req, res, next) => {
-    console.log("GET /examples")
-    db.uploads.find((err, uploads) => {
-        if (err) return res.status(500).json({ error: err });
-        res.json(uploads);
+/*router.get('/examples', passport.authenticate('projecto-jwt', {session: false}), (req, res, next) => {
+  console.log("GET /examples")
+  console.log(req)
+  db.uploads.find((err, uploads) => {
+    if (err) return res.status(500).json({ error: err });
+    res.json(uploads);
+  });
+});*/
+
+router.get('/examples', function(req, res, next) {
+  passport.authenticate('projecto-jwt', {session: false}, function(err, user, info) {
+    if (err) { return res.status(500).json({success: false, msg: err}); }
+    // user not found
+    if (!user) {
+      // info object has the message for unauthorized access from the passport-strategy
+      return res.status(401).json({success: false, msg: "Unauthorized access. Please log in."})
+    }
+    // successfull authorization
+    req.logIn(user, function(err) {
+      if (err) { return next(err); }
+      // query db for examples
+      db.uploads.find((err, uploads) => {
+        if (err) return res.status(500).json({success: false, msg: err});
+        return res.json({success: true, examples: uploads});
+      });
     });
-});
+  })(req, res, next);
+})
 
 //Get especific file image
 router.get('/examplesFile/:id', (req, res, next) => {
-    db.uploads.findOne({_id: mongojs.ObjectId(req.params.id)}, (err, example) => {
-        if (err) return res.status(500).json({ error: err });
-        else if(example == null) return res.status(500).json({ error: "Example not found" });
-        console.log(example)
-        res.sendFile(path.join(__dirname, '/../../uploaded', `/${example.uploadInfo.fileName}`));
-    });
+  db.uploads.findOne({_id: mongojs.ObjectId(req.params.id)}, (err, example) => {
+    if (err) return res.status(500).json({ error: err });
+    else if(example == null) return res.status(500).json({ error: "Example not found" });
+    console.log(example)
+    res.sendFile(path.join(__dirname, '/../../uploaded', `/${example.uploadInfo.fileName}`));
+  });
 });
 
 //Form and file upload
