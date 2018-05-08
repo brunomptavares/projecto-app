@@ -30,6 +30,7 @@
     @import '~bulma/bulma';
     @import 'compass/css3';
     #main-nav {
+      //background-image: url(../../images/main-nav-bck.png);
       @extend .menu;
       padding:1.5em;
       min-width: 250px;

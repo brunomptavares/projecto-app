@@ -28,7 +28,6 @@
   import { TweenMax } from 'gsap';
   import VuexService from "./services/VuexService.js"
 
-
   export default {
     name: 'App',
     components: { "top-nav" : TopNav, "event-button" : EventButton, "main-nav": MainNav },
@@ -39,12 +38,10 @@
         slideAnimation: null
       }
     },
-    created() {
-
-    },
     methods: {
-      test() {
-
+      handleWindowResize(event) { 
+        //console.log(event.currentTarget.innerWidth <= 1024)
+        //VuexService.dispatch('setMobile', (event.currentTarget.innerWidth <= 1024));
       }
     },
     computed: {
@@ -71,6 +68,8 @@
       }
     },
     mounted() {
+      //Check if is mobile
+      //window.addEventListener('resize', this.handleWindowResize);
       //We need to get the mainNav element reference when the DOM is ready
       this.mainNav = this.$refs.mainNav.$el
       //Create animation
@@ -84,6 +83,9 @@
       if(this.mainNav && this.mainNavToggle) this.slideAnimation.play().timeScale(1)
       //Get routerView reference
       this.routerView = this.$refs.routerView.$el
+    },
+    beforeDestroy() {
+      //window.removeEventListener('resize', this. handleWindowResize)
     }
   }
 </script>

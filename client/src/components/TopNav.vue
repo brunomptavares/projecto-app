@@ -1,5 +1,13 @@
 <template>
   <nav id="top-nav" class="navbar is-link">
+    <div id="icons-menu">      
+      <div class="navbar-burger burger" v-on:click="toggleMainNav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+
     <div class="navbar-brand">
       <div class="navbar-item">
           <span class="logo">{{$appName}}</span>
@@ -15,14 +23,6 @@
         <a class="button is-info">
           <font-awesome-icon class="icon" icon="search" />
         </a>
-      </div>
-    </div>
-
-    <div id="icons-menu">      
-      <div class="navbar-burger burger" v-on:click="toggleMainNav">
-        <span></span>
-        <span></span>
-        <span></span>
       </div>
     </div>
   </nav>
@@ -51,7 +51,7 @@
       }
 
       .navbar-item {
-        padding-left: $border-space;
+        padding-left: 0;
         padding-right: $border-space;
       }
 
