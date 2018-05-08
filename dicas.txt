@@ -110,3 +110,8 @@ git push origin master
 git status
 
 git checkout -b feature-auth
+
+
+Service logic was introduced to be used by Vue Components. Operations like authentication (passportjs), state-managment (Vuex), sending HTTP requests (axios) to query our API, displaying toast messages (toastr), etc can be wrapped in Services that can be used by components to render html to the browser. The HTTPService knows how to send basic HTTP requests to our API. AuthService and ExamplesService use HTTPService to use /auth and /api endpoints. Most of the Components code was changed to adapt to Services and other things were corrected. We use Vuex (inside VuexService) to save the app state (a boolean to toggle the main navigation menu open and the JWToken to authenticate requests. The Vuex store is saved persistently in the localStorage.Authentication feature is now implemented using JWT tokens
+
+On the back-end we have two APIs: one for authentication (/auth/login and /auth/register) and other for examples(/api/examples uses GET requests to retrieve examples and POST to add examples with file upload). The examples API is protected and can only be accessed by authorized users. Requests are authorized using JSON Web Tokens in the Authorization header.
