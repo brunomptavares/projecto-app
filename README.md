@@ -3,8 +3,8 @@ Repository for projecto-app
 
 App is built on the MEVN(MongoExpressVueNode) stack.
 
-*server - nodeJS/express back-end with mongoDB
-*client - vueJS front-end
+* server - nodeJS/express back-end with mongoDB
+* client - vueJS front-end
 
 ```
 testeArtur = true;
