@@ -4,7 +4,7 @@ var ExtractJwt = require('passport-jwt').ExtractJwt;
 var secret = 'projecto-app-secret';
 
 //Load user model
-var User = require('../logic/user');
+var Utilizador = require('../logic/Utilizador');
 
 passport.serializeUser(function(user, done) {
   done(null, user);
@@ -23,7 +23,7 @@ module.exports = {
     return new JwtStrategy(options, function(jwt_payload, done) {
       console.log('payload received', jwt_payload);
       // obter utilizador e colocar no pedido
-      User.findOne( {_id: jwt_payload.id}, {password: true} , function(err, user) {
+      Utilizador.findOne( {_id: jwt_payload.id}, {password: true} , function(err, user) {
         if (err) return done(err);
         if (user) return done(null, user);
         else return done(null, false, { msg: 'No such user.'});

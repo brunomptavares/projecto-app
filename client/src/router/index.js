@@ -1,13 +1,16 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
-import MainPage from '../components/MainPage.vue'
-import ViewExamples from '../components/ViewExamples.vue'
-import AddExample from '../components/AddExample.vue'
+import Entrada from '../components/Entrada.vue'
 
-import LoginArea from '../components/LoginArea.vue'
-import RegisterArea from '../components/RegisterArea.vue'
-import PerfilArea from '../components/PerfilArea.vue'
+import Login from '../components/auth/Login.vue'
+import Registo from '../components/auth/Registo.vue'
+
+import Perfil from '../components/Perfil.vue'
+
+import Recursos from '../components/recursos/Recursos.vue'
+import Recurso from '../components/recursos/Recurso.vue'
+import AdicionarRecurso from '../components/recursos/AdicionarRecurso.vue'
 
 Vue.use(Router)
 
@@ -21,35 +24,39 @@ function loginRedirect(to, from, next) {
 
 const routes = [
   { path: '/', 
-    name: 'MainPage', 
-    component: MainPage,
+    name: 'Entrada', 
+    component: Entrada,
     beforeEnter: (to, from, next) => { loginRedirect(to, from, next) }
   },
-  { path: '/viewExamples',
-    name: 'ViewExamples',
-    component: ViewExamples ,
-   beforeEnter: (to, from, next) => { loginRedirect(to, from, next) }
+  { path: '/recursos',
+    name: 'Recursos',
+    component: Recursos ,
   },
-  { path: '/addExample',
-    name: 'AddExample',
-    component: AddExample,
+  { path: '/recursos/obterRecurso/:recursoId',
+    name: 'Recurso',
+    component: Recurso,
+    props: true // to pass recurso._id
+  },
+  { path: '/recursos/adicionarRecurso',
+    name: 'AdicionarRecurso',
+    component: AdicionarRecurso ,
     beforeEnter: (to, from, next) => { loginRedirect(to, from, next) }
   },
   { path: '/login', 
-    name: 'LoginArea', 
-    component: LoginArea,
+    name: 'Login', 
+    component: Login,
   },
   //Área pessoal
-  //{ path: '/pessoal/agenda', name: 'AgendaArea', component: AgendaArea }
-  //{ path: '/pessoal/horario', name: 'HorarioArea', component: HorarioArea },
+  //{ path: '/pessoal/favoritos', name: 'Favoritos', component: Favoritos }
+  //{ path: '/pessoal/horario', name: 'Horario', component: Horario },
   { path: '/pessoal/perfil', 
-    name: 'PerfilArea', 
-    component: PerfilArea,
+    name: 'Perfil', 
+    component: Perfil,
     beforeEnter: (to, from, next) => { loginRedirect(to, from, next) }
   },
   { path: '/registo', 
-    name: 'RegisterArea', 
-    component: RegisterArea
+    name: 'Registo', 
+    component: Registo
   }
 ]
 
@@ -61,7 +68,7 @@ var router = new Router({
 })
 
 router.afterEach((to, from) => {
-  let mobile = window.innerWidth <= 1024;
+  let mobile = window.innerWidth < 1024;
   console.log(mobile)
   if(mobile && VuexService.getters.mainNavOpen) VuexService.dispatch('toggleMainNav')
 })

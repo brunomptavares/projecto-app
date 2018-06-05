@@ -1,3 +1,4 @@
+
 //Imports
 const express = require("express");
 const cors = require("cors");
@@ -8,6 +9,7 @@ const passport = require('passport');
 const morgan = require('morgan');
 const app = express();
 const strategy = require('./config/passport-strategy').getStrategy();
+const mongo = require("mongojs")
 
 //routes
 const indexRoutes = require('./routes/index');
@@ -41,6 +43,10 @@ global.uploadDir = path.join(__dirname, '../uploaded');
 // load custom authentication strategy for passport
 passport.use('projecto-jwt', require('./config/passport-strategy').getStrategy())
 
+var Recurso = require('./logic/Recurso')
+var Evento = require('./logic/Evento')
+const db = require("./db");
+
 app.listen(app.get('port'), () => {
-    console.log('Running on port ', app.get('port'));
+  console.log('Running on port ', app.get('port'));
 });

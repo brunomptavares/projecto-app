@@ -11,7 +11,8 @@ const vuexLocal = new VuexPersistence({
 var store = new Vuex.Store({
   plugins: [vuexLocal.plugin],
   state: {
-    teste: false,
+    //nao usado remover?
+    mobile: true,
     mainNavOpen: true,
     jwtToken: null,
   },

@@ -4,44 +4,46 @@
     <p class="trick">{{this.mainNavToggle}}</p>
     <div id="main-section">
       <main-nav ref="mainNav"></main-nav>
-      <div id="main-content">
-        <router-view ref="routerView"/>
+      <div id="main-content" ref="mainContent">
+        <router-view/>
       </div>
     </div>
-    <!--<section class="section">
-      <slide class="container is-fluid" menu="#main-nav" panel="#main-content" v-bind:toggleSelectors="['.burger']" v-on:open="open">
-        <div class="columns">
-          <main-nav/>
-          <router-view/>
-        </div>
-      </slide>
-      <event-button></event-button>
-    </section>-->
   </div>
 </template>
 
 <script>
-  import TopNav from "./components/TopNav.vue"
-  import EventButton from "./components/EventButton.vue"
-  import MainNav from "./components/MainNav.vue";
+  import TopNav from "@/components/navigation/TopNav.vue"
+  import MainNav from "@/components/navigation/MainNav.vue";
 
   import { TweenMax } from 'gsap';
-  import VuexService from "./services/VuexService.js"
+  import VuexService from "@/services/VuexService.js"
 
   export default {
     name: 'App',
-    components: { "top-nav" : TopNav, "event-button" : EventButton, "main-nav": MainNav },
+    components: { "top-nav" : TopNav, "main-nav": MainNav },
     data() {
       return {
         mainNav: null,
-        routerView: null,
-        slideAnimation: null
+        mainNavAnimation: null,
+        mainContent: null,
+        mainContentAnimation: null
       }
     },
     methods: {
-      handleWindowResize(event) { 
-        //console.log(event.currentTarget.innerWidth <= 1024)
-        //VuexService.dispatch('setMobile', (event.currentTarget.innerWidth <= 1024));
+      slideMenu() {
+        if(this.mainNav && this.mainContent) {
+          //Slide out menu
+          if(this.mainNavToggle) {
+            this.mainNavAnimation.play().timeScale(1);
+            // if is not mobile slide mainContent too
+            if(window.innerWidth >= 1024) {
+              this.mainContentAnimation.play().timeScale(1);
+            }
+          } else {
+            this.mainNavAnimation.reverse().timeScale(0.5);
+            this.mainContentAnimation.reverse().timeScale(0.5);
+          }
+        }
       }
     },
     computed: {
@@ -57,35 +59,31 @@
       //Watcher uses the same name as the function it's watching
       //Toggle the menu using the animation
       mainNavToggle : function() {
-        if(this.mainNav) {
-          if(this.mainNavToggle) {
-            //Slide out menu
-            this.slideAnimation.play().timeScale(1);
-          } else {
-            this.slideAnimation.reverse().timeScale(0.5);
-          }
-        }
+        this.slideMenu()
       }
     },
     mounted() {
-      //Check if is mobile
-      //window.addEventListener('resize', this.handleWindowResize);
       //We need to get the mainNav element reference when the DOM is ready
       this.mainNav = this.$refs.mainNav.$el
-      //Create animation
+      this.mainContent = this.$refs.mainContent
+      //Create animation for menu
       //Negative margin to hide the menu on the left
       //Opacity is to clear the shadow from the menu
       //Paused is not to start animation immediately
-      this.slideAnimation = TweenMax.to(this.mainNav, 0.5, 
+      this.mainNavAnimation = TweenMax.to(this.mainNav, 0.5, 
         { ease: Power1.easeIn, 
-          marginLeft: 0, opacity:"1", paused:true })
+          marginLeft: 0, 
+          opacity:"1", 
+          paused:true })
+      // Create animation for mainContent
+      this.mainContentAnimation = TweenMax.to(this.mainContent, 0.5, 
+        { ease: Power1.easeIn, 
+          marginLeft: 250, 
+          paused:true })
       //Hide mainNav if is closed
-      if(this.mainNav && this.mainNavToggle) this.slideAnimation.play().timeScale(1)
-      //Get routerView reference
-      this.routerView = this.$refs.routerView.$el
-    },
-    beforeDestroy() {
-      //window.removeEventListener('resize', this. handleWindowResize)
+      if(this.mainNav && this.mainNavToggle) {
+        this.slideMenu()
+      }
     }
   }
 </script>
@@ -96,6 +94,7 @@
   @import 'compass/css3';
 
   #main-section {
+    margin-top:52px; //AVACALHO
     @include display-flex();
   }
 

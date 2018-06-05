@@ -18,6 +18,7 @@ export default {
   },
   logOut(formData) {
     VuexService.dispatch('clearToken')
+    return {data: {success: true, msg: 'Desautenticação concluída com sucesso.'}}
   },
   loggedIn() {
     return VuexService.getters.jwtToken

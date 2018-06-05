@@ -38,7 +38,7 @@ export default {
   toastFromResponse(toastr, res) {
     // shallow copy, nested objects are still copied as references
     let toast = basicToast(
-      res.data.success ? "Success" : "Error",
+      res.data.success ? "Successo" : "Erro",
       res.data.msg,
       res.data.success ? "success" : "error")
     // render toast using the toastr plugin

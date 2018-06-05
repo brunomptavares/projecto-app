@@ -3,14 +3,13 @@ var express = require('express');
 var jwt = require('jsonwebtoken');
 var secret = require('../config/passport-strategy').getSecret();
 var router = express.Router();
-var User = require("../logic/user");
+var Utilizador = require("../logic/Utilizador");
 
 router.post('/login', function(req, res) {
-  console.log(req.body)
-  User.findOne({username: req.body.username}, function(err, user) {
-    if (err) return res.status(500).json({success: false, msg: 'Authentication failed. User not found.'});
+  Utilizador.findOne({username: req.body.username}, function(err, user) {
+    if (err) return res.status(500).json({success: false, msg: 'A autenticação falhou.'});
     if (!user) {
-      return res.status(401).json({success: false, msg: 'Authentication failed. User not found.'});
+      return res.status(401).json({success: false, msg: 'A autenticação falhou. O username não foi encontrado.'});
     } else {
       // check if password matches
       user.comparePassword(req.body.password, function (err, isMatch) {
@@ -19,9 +18,9 @@ router.post('/login', function(req, res) {
           var token = jwt.sign({id: user.id}, secret);
           // reply with jwt token to authenticate future requests
           // and userID to identify the user
-          return res.json({success: true, msg: 'Authentication sucessfull.', jwtToken: "JWT " + token});
+          return res.json({success: true, msg: 'Autenticação concluída com sucesso.', jwtToken: "JWT " + token});
         } else {
-          return res.status(401).json({success: false, msg: 'Authentication failed. Wrong password.'});
+          return res.status(401).json({success: false, msg: 'A autenticação falhou. A password está errada.'});
         }
       });
     }
