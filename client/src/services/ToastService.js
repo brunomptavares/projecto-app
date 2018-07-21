@@ -2,7 +2,7 @@ import Toastr from 'vue-toastr';
 
 // toast basic options
 var toastOptions = {
-  "preventDuplicates": true,
+  //"preventDuplicates": true,
   "closeButton": true,
   "clickClose": true,
   "debug": false,

@@ -15,11 +15,13 @@ var store = new Vuex.Store({
     mobile: true,
     mainNavOpen: true,
     jwtToken: null,
+    categorias: []
   },
   getters:{
     mainNavOpen: state => state.mainNavOpen,
     jwtToken: state => state.jwtToken,
-    mobile: state => state.mobile
+    mobile: state => state.mobile,
+    categorias: state => state.categorias
   },
   actions:{
     toggleMainNav({ commit, state }) {
@@ -33,6 +35,9 @@ var store = new Vuex.Store({
     },
     clearToken ({ commit, state }) {
       commit('clearToken')
+    },
+    setCategorias ({ commit, state }, categorias) {
+      commit('setCategorias', categorias)
     }
   },
   mutations:{
@@ -47,9 +52,10 @@ var store = new Vuex.Store({
     },
     clearToken (state) {
       state.jwtToken = null
+    },
+    setCategorias (state, categorias) {
+      state.categorias = categorias
     }
-
-
   }
 })
 

@@ -1,15 +1,15 @@
 var mongoose = require('mongoose');
 var Recurso = require('./Recurso')
 
-var recursoFicheiroSchema = new mongoose.Schema({
-  extensao: {
+var fonteInfoURLSchema = new mongoose.Schema({
+  tipo: {
     type: String,
     required: true
   },
-  caminho: {
+  url: {
     type: String,
     required: true
   },
 });
 
-module.exports = Recurso.discriminator('RecursoFicheiro', recursoFicheiroSchema)
+module.exports = Recurso.discriminator('FonteInfoURL', fonteInfoURLSchema)

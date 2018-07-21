@@ -1,14 +1,14 @@
 <template>
   <div>
     <div class="login-area">
-      <h1>Log-in</h1>
-      <p>Inserir credenciais para fazer log-in na aplicação.</p>
+      <h1>Autenticação</h1>
+      <p>Inserir credenciais para se autenticar na aplicação.</p>
       <p>Apenas mete a JWToken na localStorage o que permite aceder ás API's que necessitam de registo.</p>
       <form class="login-form" enctype="multipart/form-data" v-on:submit.prevent="logIn()">
         <div class="field">
-          <label class="label">Username</label>
+          <label class="label">Nome</label>
           <div class="control">
-            <input class="input" type="text" name="username" v-model="loginData.username">
+            <input class="input" type="text" name="nome" v-model="loginData.nome">
           </div>
         </div>
 
@@ -53,7 +53,7 @@ export default {
   name: 'Login',
   data() {
     return {
-      loginData: {username : "" , password: ""}
+      loginData: {nome : "" , password: ""}
     };
   },
   methods: {

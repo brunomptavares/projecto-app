@@ -13,5 +13,8 @@ export default {
   getConnection() {
     ax.defaults.headers.common['Authorization'] = VuexService.getters.jwtToken;
     return ax;
+  },
+  getBaseURL() {
+    return ax.defaults.baseURL
   }
 }

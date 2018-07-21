@@ -8,6 +8,7 @@
         <router-view/>
       </div>
     </div>
+    <modals-container/>
   </div>
 </template>
 
@@ -111,11 +112,5 @@
   .trick {
     display: none;
   }
-
-  /*toast-container {
-    top:auto;
-    right: 12px;
-    bottom: 12px;
-  }*/
 
 </style>

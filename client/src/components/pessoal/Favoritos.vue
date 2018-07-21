@@ -1,7 +1,6 @@
 <template>
-  <div class="recursos-geral">
-    <h1>Recursos</h1>
-    <p>Neste componente mostramos todos os recursos disponíveis.</p>
+  <div class="recursos-favoritos">
+    <h1>Favoritos</h1>
     <recursos-list v-bind:recursos="recursos"/>
   </div>
 </template>
@@ -9,7 +8,7 @@
 <style lang="scss">
   @import '~bulma/bulma';
   @import 'compass/css3';
-  .recursos-geral {
+  .recursos-favoritos {
     @extend .content;
   }
 </style>
@@ -19,7 +18,7 @@ import RecursosService from "@/services/RecursosService";
 import RecursosList from "@/components/recursos/RecursosList";
 
 export default {
-  name: "Recursos",
+  name: "Favoritos",
   components: {"recursos-list": RecursosList},
   data() {
     return {
@@ -27,12 +26,13 @@ export default {
     }
   },
   mounted() {
-    this.getRecursos();
+    this.getFavoritos();
   },
   methods: {
-    async getRecursos() {
-      let res = await RecursosService.fetchRecursos();
+    async getFavoritos() {
+      let res = await RecursosService.fetchRecursosFavoritos();
       if(res.data.success) this.recursos = res.data.recursos;
+      console.log(this.recursos)
     }
   }
 };

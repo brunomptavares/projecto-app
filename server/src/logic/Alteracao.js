@@ -1,8 +1,9 @@
 var mongoose = require('mongoose');
 
 var alteracaoSchema = new mongoose.Schema({
-  utilizadorId: {
+  utilizador: {
     type: mongoose.Schema.ObjectId,
+    ref: 'Utilizador',
     required:true
   },
   dataHora: {

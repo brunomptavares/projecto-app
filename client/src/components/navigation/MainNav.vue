@@ -1,5 +1,5 @@
 <template>
-  <aside id="main-nav">
+  <aside id="main-nav" v-on:click.self="toggleMainNav()">
     <div class="area-pessoal">
       <p class="menu-label">Área Pessoal</p>
       <ul v-if="loggedIn" class="menu-list">
@@ -20,6 +20,12 @@
       <ul class="menu-list">
         <li><router-link to="/recursos" exact tag="a">Recursos</router-link></li>
         <li><router-link to="/problemas" exact tag="a">Reportar problemas</router-link></li>
+      </ul>
+    </div>
+    <div class="area-comum">
+      <p class="menu-label">Área Administrativa</p>
+      <ul class="menu-list">
+        <li><router-link to="/categorias" exact tag="a">Categorias</router-link></li>
       </ul>
     </div>
   </aside>
@@ -69,6 +75,7 @@
 <script>
 
   import AuthService from "@/services/AuthService"
+  import VuexService from "@/services/VuexService"
   import ToastService from "@/services/ToastService"
 
   export default {
@@ -83,6 +90,9 @@
         let res = AuthService.logOut()
         ToastService.toastFromResponse(this.$toastr, res)
         this.$router.push({name:'Login'})
+      },
+      toggleMainNav() {
+        VuexService.dispatch("toggleMainNav");
       }
     }
   };

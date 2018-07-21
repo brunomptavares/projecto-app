@@ -3,12 +3,12 @@
 const express = require("express");
 const cors = require("cors");
 const path = require("path");
-const jwt = require('express-jwt');
-const jwks = require('jwks-rsa');
-const passport = require('passport');
 const morgan = require('morgan');
 const app = express();
 const strategy = require('./config/passport-strategy').getStrategy();
+const jwt = require('express-jwt');
+const jwks = require('jwks-rsa');
+const passport = require('passport');
 const mongo = require("mongojs")
 
 //routes
@@ -41,7 +41,7 @@ app.use('/auth', authRoutes);
 global.uploadDir = path.join(__dirname, '../uploaded');
 
 // load custom authentication strategy for passport
-passport.use('projecto-jwt', require('./config/passport-strategy').getStrategy())
+passport.use('projecto-jwt', strategy)
 
 var Recurso = require('./logic/Recurso')
 var Evento = require('./logic/Evento')

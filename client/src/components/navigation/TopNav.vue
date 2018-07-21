@@ -1,7 +1,7 @@
 <template>
   <nav id="top-nav" class="navbar is-link">
     <div id="icons-menu">      
-      <div class="navbar-burger burger" v-on:click="toggleMainNav">
+      <div class="navbar-burger burger" v-on:click="toggleMainNav()">
         <span></span>
         <span></span>
         <span></span>
@@ -67,6 +67,9 @@
         .navbar-burger {
           margin-left: 0;
           display:block !important;
+          &:hover {
+            background-color:rgba(0, 0, 0, 0.15);  
+          }
         }
       }
 
@@ -104,7 +107,7 @@ export default {
   name: "navbar",
   components: {FontAwesomeIcon},
   methods: {
-    toggleMainNav: () => {
+    toggleMainNav() {
       VuexService.dispatch("toggleMainNav");
     }
   }

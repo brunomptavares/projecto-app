@@ -6,7 +6,7 @@ var router = express.Router();
 var Utilizador = require("../logic/Utilizador");
 
 router.post('/login', function(req, res) {
-  Utilizador.findOne({username: req.body.username}, function(err, user) {
+  Utilizador.findOne({nome: req.body.nome}, function(err, user) {
     if (err) return res.status(500).json({success: false, msg: 'A autenticação falhou.'});
     if (!user) {
       return res.status(401).json({success: false, msg: 'A autenticação falhou. O username não foi encontrado.'});
@@ -28,21 +28,19 @@ router.post('/login', function(req, res) {
 });
 
 router.post('/register', function(req, res) {
-  console.log(req.body)
-  if (!req.body.username || !req.body.password) {
-    res.json({success: false, msg: 'Please pass username and password.'});
-  } else {
-    var newUser = new User({
-      username: req.body.username,
-      password: req.body.password
-    });
-    console.log(newUser)
-    // save the user
-    newUser.save(function(err) {
-      if (err) return res.json({success: false, msg: 'Username already exists.'});
-      res.json({success: true, msg: 'Successful created new user.'});
-    });
-  }
+  var newUser = new Utilizador({
+    nome: req.body.nome,
+    password: req.body.password,
+    nAluno: req.body.nAluno,
+    email: req.body.email
+  });
+  // save the user
+  newUser.save(function(err) {
+    if (err) {
+      return res.status(401).json({success: false, msg: Object.values(err.errors)[0].message});
+    }
+    return res.json({success: true, msg: 'Utilizador criado com sucesso.'});
+  });
 });
 
 module.exports = router;

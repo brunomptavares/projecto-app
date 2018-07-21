@@ -20,13 +20,12 @@ module.exports = {
     options.jwtFromRequest = ExtractJwt.fromAuthHeaderWithScheme('JWT');
     options.secretOrKey = secret;
     // JWT strategy checks for token in the Authorization header (JWT <token>)
-    return new JwtStrategy(options, function(jwt_payload, done) {
-      console.log('payload received', jwt_payload);
+    return new JwtStrategy(options, (jwt_payload, done) => {
       // obter utilizador e colocar no pedido
-      Utilizador.findOne( {_id: jwt_payload.id}, {password: true} , function(err, user) {
+      Utilizador.findOne( {_id: jwt_payload.id}, {password: 0} , (err, user) => {
         if (err) return done(err);
         if (user) return done(null, user);
-        else return done(null, false, { msg: 'No such user.'});
+        else return done(null, false, { message: 'Falha na autenticação.'});
       });
     });
   },

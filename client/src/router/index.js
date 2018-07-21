@@ -6,11 +6,14 @@ import Entrada from '../components/Entrada.vue'
 import Login from '../components/auth/Login.vue'
 import Registo from '../components/auth/Registo.vue'
 
-import Perfil from '../components/Perfil.vue'
+import Perfil from '../components/pessoal/Perfil.vue'
+import Favoritos from '../components/pessoal/Favoritos.vue'
 
 import Recursos from '../components/recursos/Recursos.vue'
 import Recurso from '../components/recursos/Recurso.vue'
 import AdicionarRecurso from '../components/recursos/AdicionarRecurso.vue'
+
+import Categorias from '../components/categorias/Categorias.vue'
 
 Vue.use(Router)
 
@@ -39,7 +42,18 @@ const routes = [
   },
   { path: '/recursos/adicionarRecurso',
     name: 'AdicionarRecurso',
-    component: AdicionarRecurso ,
+    component: AdicionarRecurso,
+    beforeEnter: (to, from, next) => { loginRedirect(to, from, next) }
+  },
+  { path: '/recursos/editarRecurso',
+    name: 'EditarRecurso',
+    component: AdicionarRecurso,
+    props: true,
+    beforeEnter: (to, from, next) => { loginRedirect(to, from, next) }
+  } ,
+  { path: '/categorias',
+    name: 'Categorias',
+    component: Categorias ,
     beforeEnter: (to, from, next) => { loginRedirect(to, from, next) }
   },
   { path: '/login', 
@@ -47,7 +61,10 @@ const routes = [
     component: Login,
   },
   //Área pessoal
-  //{ path: '/pessoal/favoritos', name: 'Favoritos', component: Favoritos }
+  { path: '/pessoal/favoritos', 
+    name: 'Favoritos', 
+    component: Favoritos 
+  },
   //{ path: '/pessoal/horario', name: 'Horario', component: Horario },
   { path: '/pessoal/perfil', 
     name: 'Perfil', 
@@ -69,7 +86,6 @@ var router = new Router({
 
 router.afterEach((to, from) => {
   let mobile = window.innerWidth < 1024;
-  console.log(mobile)
   if(mobile && VuexService.getters.mainNavOpen) VuexService.dispatch('toggleMainNav')
 })
 
